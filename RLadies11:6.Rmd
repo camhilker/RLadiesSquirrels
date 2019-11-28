@@ -1,0 +1,36 @@
+---
+title: "R Ladies Meetup 11/6"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(leaflet)
+```
+
+```{r}
+nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
+
+nyc_squirrels
+```
+```{r}
+length(nyc_squirrels$unique_squirrel_id)-length(unique(nyc_squirrels$unique_squirrel_id))
+```
+```{r}
+unique(nyc_squirrels$other_activities)
+```
+```{r}
+unique(nyc_squirrels$other_interactions)
+```
+```{r}
+squirrelIcon <- makeIcon(
+  iconUrl = "https://www.shareicon.net/data/256x256/2015/09/02/94581_squirrel_512x512.png",
+  iconWidth = 20, iconHeight = 20,
+  #iconAnchorX = 22, iconAnchorY = 94
+)
+
+leaflet(nyc_squirrels) %>% 
+  addTiles() %>%
+  addMarkers(~long, ~lat, icon = squirrelIcon)
+```
